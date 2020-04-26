@@ -1,0 +1,76 @@
+---
+title: "Class_project_DESeq2_FFPE"
+author: "SZ"
+date: "4/17/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Load reuqired libraries
+```{r}
+setwd("~/SYBB412_class_project")
+
+suppressPackageStartupMessages(library(DESeq2))
+suppressPackageStartupMessages(library(org.Hs.eg.db))
+
+```
+
+## read the count matrix data
+```{r}
+cts_ffpe <- read.table("FFPE_featureCounts.Rmatrix.txt", header = TRUE)
+rownames(cts_ffpe) <- cts$Geneid
+cts_ffpe <- cts_ffpe[,-c(1)]    ## set rownames as Geneid
+
+```
+
+## We already read the cts data, now we need to read colData 
+```{r}
+colData_ffpe <- read.table("FFPE_sample_condition.txt", header = TRUE)
+
+## We should make sure we have the correct level order
+colData_ffpe$condition <- factor(colData_ffpe$condition, 
+                                 c("no_chemo", "chemo"))
+
+```
+
+## Now we need to need to create a DESeqDataSet which is the core object of DESeq2. And then we use DESeq2 to find differentially expressed genes
+```{r}
+dds_ffpe <- DESeqDataSetFromMatrix(countData = cts_ffpe,
+                              colData = colData_ffpe,
+                              design= ~ condition)
+dds_ffpe <- DESeq(dds_ffpe)
+
+## lists the coefficients
+resultsNames(dds_ffpe) 
+
+## Build the results table and re-sort it according to padj values
+res_ffpe <- results(dds_ffpe, name="condition_chemo_vs_no_chemo")
+res_ffpe_1 <- na.omit(res_ffpe)
+
+resSig_ffpe_1 <- subset(res_ffpe_1, padj < 0.05 & log2FoldChange >= 1 | padj < 0.05 & log2FoldChange <= -1)
+
+resSig_ffpe_1_DE <- as.data.frame(resSig_ffpe_1)
+
+## add a column of gene name
+resSig_ffpe_1_DE$symbol <- mapIds(org.Hs.eg.db,
+                     keys=row.names(resSig_ffpe_1_DE),
+                     column="SYMBOL",
+                     keytype="ENSEMBL",
+                     multiVals="first")
+
+
+## save the table of significantlly differentially expressed genes
+write.table(resSig_ffpe_1_DE, file = "DESeq2_DEG_Sig_FFPE.tab",
+            quote = FALSE, sep = "\t", row.names = FALSE)
+
+```
+
+## Session information
+```{r}
+
+sessionInfo()
+
+```
