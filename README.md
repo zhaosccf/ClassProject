@@ -26,3 +26,7 @@ Below is an overview of the steps I take:
   7.	Perform Gene Ontology analysis and GSEA analysis using R package – clusterProfiler.
 
 The first three steps were performed on the Cleveland Clinic High-performance computer clusters (HPC) and the last four steps were completed using RStudio 3.6.2 and necessary Bioconductor packages.
+
+*** I only uploaded three rmd files I have for DESeq2 analysis and clusterProfiler analysis onto Github as well as the plots from clusterProfiler analysis
+
+*** Detailed information of the workflow including seven steps I took, together with the discussion section can be found in the pdf file uploaed on Canvas.
