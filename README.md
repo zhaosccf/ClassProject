@@ -27,6 +27,8 @@ Below is an overview of the steps I take:
 
 The first three steps were performed on the Cleveland Clinic High-performance computer clusters (HPC) and the last four steps were completed using RStudio 3.6.2 and necessary Bioconductor packages.
 
-*** I only uploaded three rmd files I have for DESeq2 analysis and clusterProfiler analysis onto Github as well as the plots from clusterProfiler analysis
+*** I uploaded three rmd files I have for DESeq2 analysis (paired-end and single-end, seperately) and clusterProfiler analysis onto Github as well as the plots from DESeq2 and clusterProfiler analysis
 
-*** Detailed information of the workflow including seven steps I took, together with the discussion section can be found in the pdf file uploaed on Canvas.
+*** Information of each plots can be found in the pdf file uploaded onto Canvas
+
+*** Detailed description of the workflow including seven steps I took, together with the discussion section can be found in the pdf file uploaded onto Canvas.
